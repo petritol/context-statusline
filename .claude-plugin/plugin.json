@@ -1,7 +1,7 @@
 {
   "name": "context-statusline",
-  "version": "1.1.0",
-  "description": "Colorized context-window usage band: model | project | ctx % [bar] used/total",
+  "version": "1.2.0",
+  "description": "Colorized context-window and usage-limit band: model | project | ctx % [bar] used/total | session % | week %",
   "author": {
     "name": "Petri Tolonen"
   },
@@ -12,6 +12,12 @@
       "title": "Context budget",
       "description": "Turns fully red at this usage: tokens (200k) or % of window (80%)",
       "default": "200k"
+    },
+    "showUsageLimits": {
+      "type": "boolean",
+      "title": "Show usage limits",
+      "description": "Show the session (5-hour) and weekly limits after the context, with time until each resets",
+      "default": true
     }
   }
 }

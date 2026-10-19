@@ -5,22 +5,35 @@
 A [Claude Code mod](https://claude.com/blog/claude-code-mods) that shows
 **context-window usage** at a glance — a colorized percentage, a Unicode
 progress bar, and a `used / total` token count — in a band just above the
-prompt.
+prompt. It also shows your session (5-hour) and weekly usage limits, with how
+long until each one resets.
 
 The color runs green → yellow → red as the context fills — fully red at 200k
 tokens by default, or at a point you [configure](#configuration). The bar's
 empty cells preview that gradient in a darker shade, and a `│` in the current
 color marks where the budget is reached (`┃` once the fill has passed it).
 The line is drawn on a black background so the colors read on light themes
-too. The bar and project name drop out as the terminal narrows.
+too.
+
+Each section colors itself. The model, project and separators are neutral
+gray. The session and weekly limits run green → yellow at 50% → red at 100%,
+and that point is not configurable. Their bars are half the width of the
+context bar, with no budget marker.
+
+As the terminal narrows, the bars shrink, then drop out, then the week limit
+goes, then the session limit, and finally the project name.
 
 ## Requirements
 
-- **Claude Code with mod support** (function-hook plugins). Tested on v2.1.287.
+- **Claude Code with mod support** (function-hook plugins). Tested on v2.1.303.
 - A **UTF-8 terminal** (for the `█` / `░` bar glyphs) with **truecolor** support
   for the gradient (virtually all modern terminals qualify).
 
 The band draws in the terminal and in the desktop app's Code tab.
+
+Usage limits appear only on a Claude subscription, and only after the session's
+first reply. The countdown refreshes each minute without making API calls or
+using tokens.
 
 ## Installation
 
@@ -88,11 +101,16 @@ in `~/.claude/settings.json` as a quoted string:
 {
   "pluginConfigs": {
     "context-statusline@petritol": {
-      "options": { "contextBudget": "80%" }
+      "options": { "contextBudget": "80%", "showUsageLimits": false }
     }
   }
 }
 ```
+
+### Usage limits
+
+`showUsageLimits` shows or hides the session (5-hour) and weekly limits. It is
+a boolean and defaults to `true`; `false` hides both limits.
 
 ## Development
 
